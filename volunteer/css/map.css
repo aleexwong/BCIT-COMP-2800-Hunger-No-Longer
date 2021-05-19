@@ -1,0 +1,16 @@
+#mapButtons {
+    display: grid;
+    grid-template-rows: auto auto;
+    row-gap: 50px;
+}
+#mapButtons > h2 {
+    text-align: center;
+    margin-top: 10px;
+}
+#enterSearch {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 65%;
+    border-radius: 10pt 10pt 10pt 10pt;
+}
