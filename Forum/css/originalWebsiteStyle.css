@@ -45,10 +45,11 @@ body {
     display: grid;
     grid-template-rows: 200px auto;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    z-index: 9999999;
 }
 
-/* MAKE THIS EXTERNAL
-#mySidenavContainer > #profileBackground {
+/* MAKE THIS EXTERNAL!! */
+/* #mySidenavContainer > #profileBackground {
     display: grid;
     grid-template-rows: auto;
     background-image: url(https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5ece92f41f4c83000768d787%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D421%26cropX2%3D1694%26cropY1%3D37%26cropY2%3D1310);
@@ -118,7 +119,7 @@ body {
 
 #headingContainer {
     display: grid;
-    grid-template-columns: auto auto 60px;
+    grid-template-columns: auto auto auto;
     height: 71px;
     border-bottom: 0.5px black solid;
 }
@@ -161,6 +162,8 @@ body {
 #title-font {
     font-size: 20pt;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 #homeButtonContainer {
@@ -171,7 +174,7 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 15px;
+    margin-top: 11px;
     padding-right: 2px;
 }
 
@@ -206,6 +209,10 @@ body {
     border: 1px solid rgb(107, 107, 107);
 }
 
+#feed:hover {
+    cursor: pointer;
+}
+
 #dateAndUserContainer {
     display: grid;
     grid-template-columns: 130px auto auto;
@@ -226,7 +233,6 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding-top: 10px;
-
 }
 
 #titleAndTextContainer {
@@ -239,6 +245,7 @@ body {
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-weight: 900;
     color: black;
+    overflow: hidden;
 }
 
 #feedTitle > p {
@@ -333,3 +340,60 @@ body {
     color: white;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
+/************DROPDOWN CSS*************/
+.dropbtn {
+    background-color: rgb(175, 175, 175);
+    color: white;
+    padding: 16px;
+    margin-top: 12px;
+    margin-right: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: rgb(175, 175, 175);
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+    position: absolute;
+    min-width: 300px;
+    margin-top: 10px;
+    right: 2px;
+    overflow: auto;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .show {display: block;}
+
+  .twitter-follow-button {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .twitter-share-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+  }
+  
+  

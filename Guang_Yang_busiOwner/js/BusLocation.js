@@ -1,139 +1,170 @@
-/* Mapbox initialization and features
- * source: https://docs.mapbox.com/mapbox-gl-js/api/geography/ 
- */
-mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ja3JvbGFuZCIsImEiOiJja29uaG02Y2MwMWswMnZwaWJnYTQ0enlxIn0.GlQoTbJgVw3Kn7vI3Ua_Pg';
-var map = new mapboxgl.Map({
+// let map, infoWindow;
 
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-123, 49.25353], // starting position
-    zoom: 10, // starting zoom
 
+var center = {
+    lat: 49.2516,
+    lng: -123.0014
+};
+// Map options
+var options = {
+    center: center,
+    zoom: 11,
+}
+
+// New map
+var map = new google.maps.Map(document.getElementById('map'), options);
+
+// Create a button to locate the users
+infoWindow = new google.maps.InfoWindow();
+const locationButton = document.createElement("button");
+locationButton.setAttribute('id', 'locationB');
+locationButton.innerHTML = '<i class="fas fa-map-marker-alt"></i>';
+locationButton.classList.add("custom-map-control-button");
+
+map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+// Click to locate users
+locationButton.addEventListener("click", () => {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("Location found.");
+                infoWindow.open(map);
+                map.setCenter(pos);
+            },
+            () => {
+                handleLocationError(true, infoWindow, map.getCenter());
+            }
+        );
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
 });
 
-// Initialize the geolocate control.
-var geolocate = new mapboxgl.GeolocateControl({
-    positionOptions: {
-        enableHighAccuracy: true
-    },
-    trackUserLocation: true
-});
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+        browserHasGeolocation ?
+        "Error: The Geolocation service failed." :
+        "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+}
 
-// Add the control to the map.
-map.addControl(geolocate);
-// Set an event listener that fires
-// when a trackuserlocationstart event occurs.
-geolocate.on('trackuserlocationstart', function() {
-    console.log('A trackuserlocationstart event has occurred.')
-});
-
-var scale = new mapboxgl.ScaleControl({
-    maxWidth: 80,
-    unit: 'imperial'
-});
-map.addControl(scale);
-
-scale.setUnit('metric');
-
-map.on('load', function() {
-    var geocoder = new MapboxGeocoder({ // Initialize the geocoder
-        accessToken: mapboxgl.accessToken, // Set the access token
-        mapboxgl: mapboxgl, // Set the mapbox-gl instance
-        zoom: 13, // Set the zoom level for geocoding results
-        placeholder: "Enter an address or place name", // This placeholder text will display in the search bar
-        bbox: [-123.39206, 49.27801] // Set a bounding box
-
+// Listen for click on map location
+google.maps.event.addListener(map, "click", (event) => {
+    // add Marker
+    addMarker({
+        location: event.latLng
     });
-    // Add the geocoder to the map
-    map.addControl(geocoder, 'top-left'); // Add the search box to the top left
-    geocoder.on('result', function(data) { // When the geocoder returns a result
-        console.log(data);
-        var point = data.result.center; // Capture the result coordinates
+})
 
-        marker.setLngLat(point).addTo(map); // Add the marker to the map at the result coordinates
-        var tileset = 'rockroland.108yyase'; // replace this with the ID of the tileset you created
-        var radius = 1609; // 1609 meters is roughly equal to one mile
-        var limit = 50; // The maximum amount of results to return
-        var query = 'https://api.mapbox.com/v4/' + tileset + '/tilequery/' + point[0] + ',' + point[1] + '.json?radius=' + radius + '&limit= ' + limit + ' &access_token=' + mapboxgl.accessToken;
-        $.ajax({ // Make the API call
-            method: 'GET',
-            url: query,
-        }).done(function(data) { // Use the response to populate the 'tilequery' source
-            map.getSource('tilequery').setData(data);
+// Show all the registered restaurants on the map
+let markerArray = []; // save each restaurants geolocation as object and pushed into this array
+db.collection('Business')
+    .get()
+    .then((snap) => {
+        snap.forEach(doc => {
+            console.log(doc.data().longitude + " " + doc.data().latitude);
+            let location = {};
+            location.lat = doc.data().latitude;
+            location.lng = doc.data().longitude;
+            let content = `<h2>${doc.data().bName}</h2><p>${doc.data().bLocation}` + " " + `${doc.data().bZip}</p>`
+            let objGeo = {};
+            objGeo.location = location;
+            objGeo.content = content;
+            markerArray.push(objGeo);
+            console.log(markerArray);
+            for (let i = 0; i < markerArray.length; i++) {
+                addMarker(markerArray[i]);
+            }
         })
-    });
-
-    map.addSource('tilequery', { // Add a new source to the map style: https://docs.mapbox.com/mapbox-gl-js/api/#map#addsource
-        type: "geojson",
-        data: {
-            "type": "FeatureCollection",
-            "features": []
-        }
-    });
-
-    map.addLayer({ // Add a new layer to the map style: https://docs.mapbox.com/mapbox-gl-js/api/#map#addlayer
-        id: "tilequery-points",
-        type: "circle",
-        source: "tilequery", // Set the layer source
-        paint: {
-            "circle-stroke-color": "white",
-            "circle-stroke-width": { // Set the stroke width of each circle: https://docs.mapbox.com/mapbox-gl-js/style-spec/#paint-circle-circle-stroke-width
-                stops: [
-                    [0, 0.1],
-                    [18, 3]
-                ],
-                base: 5
-            },
-            "circle-radius": { // Set the radius of each circle, as well as its size at each zoom level: https://docs.mapbox.com/mapbox-gl-js/style-spec/#paint-circle-circle-radius
-                stops: [
-                    [12, 5],
-                    [22, 180]
-                ],
-                base: 5
-            },
-            "circle-color": [ // Specify the color each circle should be
-                'match', // Use the 'match' expression: https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
-                ['get', 'STORE_TYPE'], // Use the result 'STORE_TYPE' property
-                'Small Grocery Store', '#008000',
-                'Supercenter', '#008000',
-                'Superette', '#008000',
-                'Supermarket', '#008000',
-                'Warehouse Club Store', '#008000',
-                'Specialty Food Store', '#9ACD32',
-                'Convenience Store', '#FF8C00',
-                'Convenience Store With Gas', '#FF8C00',
-                'Pharmacy', '#FF8C00',
-                '#FF0000' // any other store type
-            ]
-        }
-    });
-    var popup = new mapboxgl.Popup; // Initialize a new popup
-
-    map.on('mouseenter', 'tilequery-points', function(e) {
-        map.getCanvas().style.cursor = 'pointer'; // When the cursor enters a feature, set it to a pointer
-
-        var title = '<h3>' + e.features[0].properties.STORE_NAME + '</h3>'; // Set the store name
-        var storeType = '<h4>' + e.features[0].properties.STORE_TYPE + '</h4>'; // Set the store type
-        var storeAddress = '<p>' + e.features[0].properties.ADDRESS_LINE1 + '</p>'; // Set the store address
-        var obj = JSON.parse(e.features[0].properties.tilequery); // Get the feature's tilequery object (https://docs.mapbox.com/api/maps/#response-retrieve-features-from-vector-tiles)
-        var distance = '<p>' + (obj.distance / 1609.344).toFixed(2) + ' mi. from location' + '</p>'; // Take the distance property, convert it to miles, and truncate it at 2 decimal places
-
-        var lon = e.features[0].properties.longitude;
-        var lat = e.features[0].properties.latitude;
-        var coordinates = new mapboxgl.LngLat(lon, lat); // Create a new LngLat object (https://docs.mapbox.com/mapbox-gl-js/api/#lnglatlike)
-        var content = title + storeType + storeAddress + distance; // All the HTML elements
-
-        popup.setLngLat(coordinates) // Set the popup at the given coordinates
-            .setHTML(content) // Set the popup contents equal to the HTML elements you created
-            .addTo(map); // Add the popup to the map
     })
 
-    map.on('mouseleave', 'tilequery-points', function() {
-        map.getCanvas().style.cursor = ''; // Reset the cursor when it leaves the point
-        popup.remove(); // Remove the popup when the cursor leaves the point
-    });
-});
+// Add Marker
+function addMarker(property) {
+    const marker = new google.maps.Marker({
+        position: property.location,
+        map: map,
 
-var marker = new mapboxgl.Marker({
-        'color': '#008000'
-    }) // Create a new green marker
+    });
+
+    if (property.content) {
+        const detailWin = new google.maps.InfoWindow({
+            content: property.content
+        })
+        marker.addListener('click', () => {
+            detailWin.open(map, marker);
+        })
+    }
+
+}
+
+/* This distance calculatin feature was copied from 
+https://www.youtube.com/watch?v=BkGtNBrOhKU&list=PLWnON6N0wn-EwVx4ZJNbmvC6quBgq5cif&index=4 
+ */
+// Create a Direction service to use the route method and get the result for the request
+var directionsService = new google.maps.DirectionsService();
+
+// Create a DirectionRenderer object to display the routes
+var directionsDisplay = new google.maps.DirectionsRenderer();
+
+// Bind the directionRenderer to the map
+directionsDisplay.setMap(map);
+
+// Calculate the distance
+function calcRoute() {
+    // create request
+    var request = {
+        origin: document.getElementById("from").value,
+        destination: document.getElementById('to').value,
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.IMPERIAL
+    }
+
+    // pass the request to the route method
+    directionsService.route(request, (result, status) => {
+        if (status == google.maps.DirectionsStatus.OK) {
+            //get distance and time
+            const output = document.querySelector('#output');
+            output.innerHTML = "<div class='alert-info'>From:" + document.getElementById("from").value +
+                " .<br>To:" + document.getElementById('to').value + ".<br/>Walking Distance<i class='fas fa-road'></i>" +
+                result.routes[0].legs[0].distance.text + ".<br/> Duration <i class = 'fas fa-hourglass-start'></i> : " +
+                result.routes[0].legs[0].duration.text + ".</div>";
+
+            // display route
+            directionsDisplay.setDirections(result);
+
+        } else {
+            //delete route from map
+            directionsDisplay.setDirections({
+                routes: []
+            });
+
+            // center map in bcit burnaby
+            map.setCenter(center);
+
+            // show erroe message
+            output.innerHTML = "<div class='alert-danger'><i class='fas fa-exclamation-triangle'>" +
+                "</i > could not retrieve the distance.</div > ";
+
+        }
+    });
+
+}
+//create autocomplete objects for all inputs
+var options = {
+    types: ['(postal_code)']
+}
+
+var input1 = document.getElementById("from");
+var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+
+var input2 = document.getElementById("to");
+var autocomplete2 = new google.maps.places.Autocomplete(input2, options);

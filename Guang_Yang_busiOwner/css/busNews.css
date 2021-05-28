@@ -95,3 +95,10 @@ button {
 .more {
     display: none;
 }
+
+
+/*footer*/
+
+#footer {
+    background-color: salmon !important;
+}

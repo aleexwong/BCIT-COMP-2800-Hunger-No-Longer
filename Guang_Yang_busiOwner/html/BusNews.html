@@ -15,7 +15,7 @@
 
     <!--own css-->
     <link rel="stylesheet" type="text/css" href="../css/template.css" />
-    <link rel="stylesheet" type="text/css" href="../css/BusNews.css" />
+    <link rel="stylesheet" type="text/css" href="../css/busNews.css" />
 
 
 </head>
@@ -29,23 +29,17 @@
         <!--********* Slide bar starts ***********-->
         <div id="mySidenavContainer" class="sidenav">
             <div id="profileBackground">
-                <div id="profile">
-                    <div></div>
-                    <div id="profilePicContainer">
-                        <img id="profilePic" src="https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5ece92f41f4c83000768d787%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D421%26cropX2%3D1694%26cropY1%3D37%26cropY2%3D1310"
-                            width="100px" height="100px">
-                    </div>
-                    <div id="profileName">
-                        <p><b>Damian Lillard</b></p>
-                    </div>
-                    <div id="profileEmail">
-                        <p>damian_lillard@gmail.com</p>
-                    </div>
-                </div>
+
             </div>
             <div id="mySidenavContents">
-                <a href="#"><img id="menuIcon" src="https://img.icons8.com/office/25/000000/gender-neutral-user.png"><b>My Account</b></a>
+                <a href="#"><img id="menuIcon" src="https://img.icons8.com/officel/25/000000/home-page.png"><b>Home</b></a>
+                <a href="/myAccount/myAccount_individual.html"><img id="menuIcon" src="https://img.icons8.com/office/25/000000/gender-neutral-user.png"><b>My Account</b></a>
+                <a href="/volunteer/volunteerLanding.html"><img id="menuIcon" src="https://img.icons8.com/office/27/000000/exercise.png" /><b>Volunteer</b></a>
                 <a href="#" id='sidePostNews'><img id="menuIcon" src="https://img.icons8.com/office/25/000000/shopping-cart.png" /><b>Post News</b></a>
+                <a href="/Forum/Forum.html"><img id="menuIcon" src="https://img.icons8.com/office/27/000000/crowd.png" /><b>Social Hub</b></a>
+                <a href="/AboutUs/aboutUs.html"><img id="menuIcon" src="https://img.icons8.com/doodle/27/000000/employee-card--v1.png" /><b>About Us</b></a>
+                <a href="/Help/help.html"><img id="menuIcon" src="https://img.icons8.com/officel/25/000000/help.png" /><b>Help</b></a>
+                <a href="#" id='sideLogOut'><img id="menuIcon" src="https://img.icons8.com/office/25/000000/shopping-cart.png" /><b>Log out</b></a>
             </div>
         </div>
         <!--********* Slide bar ends ***********-->
@@ -68,7 +62,7 @@
             </div>
             <!--********* Nav bar ends ***********-->
             <div class="banner">
-                <p class="bannertext">Free food from over 30 restaurants <br><span>Search in map <a href="#"><i class="fas fa-map-marker-alt"></i></span></a>
+                <p class="bannertext">Free food from over 30 restaurants <br><span>Search in map <a href="./BusLocation.html" ><i class="fas fa-map-marker-alt" id="map"></i></span></a>
                 </p>
             </div>
 
@@ -138,13 +132,13 @@
                     </div>
                 </div>
             </div>
-
+            <!--News list ends here-->
 
 
             <!--Fixed footer starts-->
-            <ul class="nav nav-pills nav-fill navbar fixed-bottom navbar-light bg-light " id="footer ">
+            <ul class="nav nav-pills nav-fill navbar fixed-bottom navbar-light bg-light" id="footer">
                 <li class="nav-item btn click-me " data-bs-toggle="tooltip " data-bs-placement="top " title="HOME ">
-                    <a class="nav-link " href="main.html "><svg xmlns="http://www.w3.org/2000/svg " width="16 " height="16 "
+                    <a class="nav-link " href="./BusNews.html"><svg xmlns="http://www.w3.org/2000/svg " width="16 " height="16 "
                         fill="black " class="bi bi-house-door-fill click-me " viewBox="0 0 16 16 " style="z-index: 1 ">
                         <path
                             d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0
@@ -175,5 +169,8 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
 <script src="../../private/firebase-api.js"></script>
-<script src="../js/BusNews.js"></script>
+<script src="../js/busNews.js"></script>
 <script src="../js/slidingNav.js"></script>
+<script src="../../private/firebase-logout.js"></script>
+<script src="/private/redirectAuth.js"></script>
+<script src="../../Forum/js/getUserProfileNav.js"></script>

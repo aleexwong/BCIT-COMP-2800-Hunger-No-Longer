@@ -133,12 +133,29 @@ $(document).ready(function() {
             $(this).text('read more');
         }
     })
-
-    // Users will go to BusNewsPost page after clicking on post news button in side bar 
-    $('#sidePostNews').click(() => {
+    $("#map").click(function() {
         console.log(222);
+        window.location.href = './BusLocation.html';
+    })
+
+    // Users will go to BusNewsPost page after clicking on post news button in side bar
+    $('#sidePostNews').click(() => {
+
         window.location.href = './BusNewsPost.html';
     })
+
+    // Users will go to volunteer page after clicking on volunteer in side bar 
+    $('#sideIndividual').click(() => {
+
+        window.location.href = '../../individual.html';
+    })
+
+    // Users will go to Forum page after clicking on volunteer in side bar 
+    $('#sideForum').click(() => {
+        window.location.href = '../../Forum/Forum.html';
+    })
+
+
 
     /**
      * Retrieve news data from database and store them in newsfeedList.
@@ -166,7 +183,7 @@ $(document).ready(function() {
         console.log(newsfeedList);
         for (i = 0; i < newsfeedList.length; i++) {
 
-            $('#title' + i).text(newsfeedList[i].Title); // Add news title
+            $('#title' + i).text(newsfeedList[i].BusName); // Add news title
             $('#date' + i).text(newsfeedList[i].PostDate); // Add news post date
 
             /* Display two news item before read more buttons and the rest
