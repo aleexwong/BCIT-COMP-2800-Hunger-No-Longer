@@ -25,7 +25,7 @@ Create an empty folder for cloning the github repository.
 
 i) Configuring Firebase:
 Register a firebase account
-create a project
+Create a project
 In project setting, find SDK setup and configuration. Click on the cdn option, copy the from "// Your web app's Firebase configuration" to the end to a seperate js file. Link that js file to every html.
 While in the SDK setup and configuration window, copy the first two script link to every html file/
 Database collection names needed (volunteer, users,post,comment,charity,businessNews,Business)
@@ -52,4 +52,4 @@ be sure to create 3 different types of accounts for testing purposes, (Individua
 
 6. Include a link to 04b Surprise challenge #2b testing plan you have completed so the new developer can see your testing history and maybe contribute to a minor bug fix!
 
-Test Plan https://docs.google.com/spreadsheets/d/1GBQdnOEdDZPdbczsjLOa77sy7CkpjOfjZwKwD6kH6Vw/edit#gid=394496370  
+Test Plan https://docs.google.com/spreadsheets/d/1GBQdnOEdDZPdbczsjLOa77sy7CkpjOfjZwKwD6kH6Vw/edit#gid=394496370  "# Hunger-No-Longer" 
