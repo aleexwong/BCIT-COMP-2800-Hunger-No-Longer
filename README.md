@@ -5,27 +5,26 @@ Solving hunger one meal at a time.
 
 Below you will find all things needed to start this web app if you wish to create your own version of Hunger No Longer!
 
-1. Needs?
+1. Tech Stack!
 Languages: JavaScript, CSS , HTML
 IDEs: Visual Studio Code or Brackets or user preference
 Database: Firebase, Firestore Cloud Storage 
 Other software: Google Chrome, GitHub, Selenium IDE Chrome Extension 
 
-2. 3rd party APIs and frameworks needed for download
+2. 3rd party APIs and Frameworks Required.
 Google APIs (Geolocation API, Maps for JavaScript, Geocoding API, Directions API, Places API, 
 Cloud Firestore API
 
-3. API keys needed?
+3. API keys Needed!
 Google API Key
 Firebase Web API key
 
-4. In which order should they install things? Does installation location matter?
-Visual Studio Code -> Firebase -> github
-html, css and JavaScript files in separate folders.
-Firebase setup js file has be linked to every html file in order to be hosted on Firebase
-Create an empty folder for cloning the github repository.
+4. Process of uploading data!
+Visual Studio Code -> Firebase -> Github
+HTML, CSS and JavaScript files in separate folders.
 
-
+Simple How To's: 
+Getting Started!
 i) Configuring Firebase:
 Register a firebase account
 Create a project
