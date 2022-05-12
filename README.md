@@ -1,21 +1,21 @@
 Checkout the website!: https://hunger-no-longer.web.app/
 
-Hunger No Longer Web Based App to connect local businesses with charities and volunteers alike. 
+Hunger No Longer Web Based App to connect local businesses with volunteers alike. 
 Solving hunger one meal at a time.
 
 Below you will find all things needed to start this web app if you wish to create your own version of Hunger No Longer!
 
 1. Tech Stack!
 Languages: JavaScript, CSS , HTML
-IDEs: Visual Studio Code or Brackets or user preference
-Database: Firebase, Firestore Cloud Storage 
-Other software: Google Chrome, GitHub, Selenium IDE Chrome Extension 
+IDEs: Visual Studio Code (recommended) or User Preference
+Database: Firebase: Firestore Cloud Storage
+Other software: Google Chrome, GitHub, Selenium Testing 
 
 2. 3rd party APIs and Frameworks Required.
 Google APIs (Geolocation API, Maps for JavaScript, Geocoding API, Directions API, Places API, 
 Cloud Firestore API
 
-3. API keys Needed!
+3. API keys needed!
 Google API Key
 Firebase Web API key
 
